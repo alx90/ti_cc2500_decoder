@@ -108,16 +108,14 @@ uint8_t reverse_bits_in_byte(uint8_t byte) // reverse bit positions in byte (msb
     return byte;
 };
 void invert_byte_array(uint8_t* array, uint16_t array_len) {
-    for (int i=0; i<array_len; i++) {
+    for (int i=0; i<array_len; i++)
         array[i] = ~array[i];
-    }
 };
 void print_byte_array(const uint8_t* array, uint16_t array_len, std::string label)
 {
     std::cout << label << ": ";
-    for (uint16_t i=0; i<array_len; i++) {
+    for (uint16_t i=0; i<array_len; i++)
         printf("%02X ",array[i]);
-    }
     std::cout << std::endl << std::endl;
 };
 
@@ -161,14 +159,10 @@ int main()
     if (IS_WHITENED) {
         // DEWHITENING
         uint16_t lfsr = 0x1ff; // starting lfsr value
-        // MAVLINK decoding straight input
-        int i=0;
-        for (i=0; i<sizeof(result_buf); i++) {
+        for (int i=0; i<sizeof(result_buf); i++) {
             result_buf[i] = result_buf[i]^lfsr;
-            for (int j=0;j<8;j++) { // NOTE FOR AFTER ^, INCLUDING INITIAL lfsr IN DE-WHITENING SEQUENCE
+            for (int j=0;j<8;j++) // NOTE for is positioned after ^ then de-whitening sequence includes initial lsfr value
                 lfsr = calc_lfsr_ti(lfsr);
-                //  lfsr = calc_lfsr_mavlink(lfsr);
-            }
         }
         print_byte_array(result_buf,sizeof(result_buf),"DEWHITENED_BUF");
     }
